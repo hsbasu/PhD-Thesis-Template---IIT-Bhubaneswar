@@ -16,15 +16,30 @@
 \fancyhead[LO]{\bfseries Publications}
 \fancyhead[LE,RO]{\thepage}
 
-\begin{refsection}[110_Publications/pub.bib]
-\addtocontents{toc}{\protect\renewcommand{\protect\cftchappresnum}{}}
-\renewcommand{\chaptername}{Chapter}
-\renewcommand{\thesection}{\arabic{section}}
-\setcounter{section}{0}
-
 \chapter*{Publications}
-\addcontentsline{toc}{chapter}{Publications}
-\nocite{*}
-\printbibliography[heading={subbibliography},title={Journal Articles},filter={papers}]
-\printbibliography[heading={subbibliography},title={Conference Proceedings},filter={conferences}]
+%% Add the BibTeX entries to the file pub.bib
+%% for your own journal articles, books, chapters
+%% and proceedings etc. They will be automatically
+%% sorted and added to the thesis by the
+%% following refsection
+
+\begin{refsection}[110_Publications/pub.bib]
+    % Since, with the chapter numbers, the table of contents
+    % look ugly, the following four lines remove the chapter
+    % numbers leaving only the section number
+    \addtocontents{toc}{\protect\renewcommand{\protect\cftchappresnum}{}}
+    \renewcommand{\chaptername}{Chapter}
+    \renewcommand{\thesection}{\arabic{section}}
+    \setcounter{section}{0}
+    
+    \addcontentsline{toc}{chapter}{Publications}
+    \nocite{*}
+    %% Uncomment the following line to add journal articles
+    \printbibliography[heading={subbibliography},title={Journal Articles},filter={papers},resetnumbers=true]
+    
+    %% Uncomment the following line to add Conference Proceedings
+    \printbibliography[heading={subbibliography},title={Conference Proceedings},filter={conferences},resetnumbers=true]
+    
+    %% Uncomment the following line to add books and chapters
+    \printbibliography[heading={subbibliography},title={Books and Chapters},filter={booksandchapters},resetnumbers=true]
 \end{refsection}

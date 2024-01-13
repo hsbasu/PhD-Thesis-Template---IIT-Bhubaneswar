@@ -6,12 +6,12 @@
 % the year of your graduation, for official preparations guidelines.
 % 
 
-\documentclass[12pt,a4paper,twoside,openright]{report}
+\documentclass[11pt,a4paper,twoside,openright]{report}
 
 %%%%%%% Import packages %%%%%%%
 % \usepackage{showframe} % makes the page borders visible, conflicts with xcolor
 % \usepackage{import}
-\usepackage{amsfonts,amsmath,amssymb,caption,enumerate,float,graphicx,setspace}
+\usepackage{amsfonts,amsmath,amssymb,bold-extra,caption,enumerate,float,graphicx,setspace}
 \usepackage{epsfig}
 \usepackage{siunitx}
 \usepackage{lipsum,blindtext} % just to generate text for the example
@@ -39,6 +39,7 @@
 % \usepackage[base]{babel}
 % \usepackage[inline]{enumitem} % Inline listing package
 \usepackage[usenames,dvipsnames]{xcolor}   % May be necessary if you want to color links
+\usepackage{pdfpages}
 
 % Page geometry
 \usepackage{geometry}
@@ -47,8 +48,8 @@
 \setlength{\topmargin}{-1.27cm}
 \setlength{\headheight}{32pt}
 \setlength{\headsep}{1em} %% Setting for gap in header and main body%%
-\setlength{\textheight}{24.0cm}
-%\setlength{\textwidth}{14.65cm}
+\setlength{\textheight}{24cm}
+% \setlength{\textwidth}{14.65cm}
 \setlength{\footskip}{1.5cm}
 \setlength{\parindent}{1.5em}
 \setlength{\parskip}{1em}
@@ -59,6 +60,7 @@
 
 % Packages and settings for chapter heading
 \usepackage[times]{quotchap}
+\renewcommand{\chapterheadstartvskip}{\vspace*{-1cm}}
 \renewcommand*\sectfont{\bfseries}
 
 % Packages and settings for table of contents
@@ -113,10 +115,14 @@
 
 \usepackage[acronym,nomain,toc]{glossaries}
 \makeglossaries
-\usepackage[intoc]{nomencl}
+\usepackage[intoc,noprefix]{nomencl}
 \makenomenclature
 \renewcommand{\nomname}{List of Symbols}
 \usepackage[toc,page]{appendix}
+
+\definecolor{chaptergrey}{RGB}{166,28,48}
+\definecolor{titlecolor}{RGB}{166,28,48}
+\definecolor{authorcolor}{RGB}{166,28,48}
 
 \usepackage{datetime}
 \newdateformat{thisdate}{%
@@ -127,6 +133,13 @@
 	\monthname[\THEMONTH]}
 \newdateformat{thisyear}{%
 	\THEYEAR}
+ 
+%% Keywords command
+\providecommand{\keywords}[1]
+{
+    \large
+    \textbf{\textit{Keywords---}} #1
+}
 
 %% Packages and settings for bibliography
 % \usepackage{cite}
@@ -172,7 +185,8 @@
 
 % --------- Title and abstract etc in the front matter ----------- %
 \pagenumbering{gobble}
-\input{00_Cover/cover_page}
+\input{00_Cover/frontcover}
+\input{00_Cover/title_page}
 
 %%%%%%%%%%%% Front Matter %%%%%%%%%%%%
 \pagenumbering{roman}
@@ -181,12 +195,19 @@
 \include{03_Certificate/Certificate}
 \include{04_Declaration/Declaration}
 \include{05_Acknowledgement/Acknowledgment}
+
+% Fancy header
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
  
 %%%%%%%%%%%% Abstract %%%%%%%%%%%%
 \setstretch{2}  % double spacing
-\let\cleardoublepage\clearpage  % Removes blank page automatically added after each chapter
+% \let\cleardoublepage\clearpage  % Removes blank page automatically added after each chapter
 
 \input{06_Abstract/Abstract}
+% \includepdf[pages=-]{abstract_other_language}
+\cleardoublepage\clearpage
 
 %%%%%% List of Abbreviations %%%%%%
 \input{07_Abbreviations/Abbreviations}
@@ -203,15 +224,12 @@
 \pagenumbering{arabic}
 %%%%%%%% To create double spacing in chapters
 \setstretch{2}
+\renewcommand{\chapterheadstartvskip}{\vspace*{-2.5cm}}
 
-% Fancy header
-\pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markright{\thesection~#1}{}}
 \renewcommand{\chaptermark}[1]{\markboth{\chaptername~\thechapter~-~#1}{}}
-\fancyhf{}
 \fancyhead[RE]{\leftmark}
 \fancyhead[LO]{\rightmark}
-\fancyhead[LE,RO]{\thepage}
 
 %%%%%% Chapters %%%%%%
 %% Remove any command starting with "\lipsum"
@@ -220,19 +238,19 @@
 
 \input{10_Chapter_1/Introduction}
 \clearpage
-%\newpage\null\newpage
+% \newpage\null\newpage
 \input{20_Chapter_2/Literature_review}
 \clearpage
-%\newpage\null\newpage
+% \newpage\null\newpage
 \input{30_Chapter_3/chapter_3}
 \clearpage
-%\newpage\null\newpage
+% \newpage\null\newpage
 \input{40_Chapter_4/chapter_4}
 \clearpage
-%\newpage\null\newpage
+% \newpage\null\newpage
 \input{50_Chapter_5/chapter_5}
 \clearpage
-%\newpage\null\newpage
+% \newpage\null\newpage
 \input{60_Conclusion/Conclusion}
 \clearpage
 
@@ -253,19 +271,15 @@
 
 %%%%%% Publications %%%%%%
 \input{110_Publications/Publications}
-\clearpage
+\newpage\null\newpage
+\let\cleardoublepage\clearpage
 
 %%%%%% Bibliography %%%%%%
 \renewcommand{\bibname}{References}
+\fancyhead[LO,RE]{\bfseries \bibname}
 \printbibliography[heading=bibintoc]
 % Comment the following line if you don't want to print
 % all the citations in the bibliography file
 \nocite{*}
-
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[RE]{\bfseries \bibname}
-\fancyhead[LO]{\bfseries \bibname}
-\fancyhead[LE,RO]{\thepage}
 
 \end{document}
